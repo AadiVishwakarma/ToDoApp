@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import date
 app = Flask(__name__)
 
 #<<<""for database"">>>
@@ -16,9 +16,9 @@ db = SQLAlchemy(app)
 #<< defining table structure in class for database>>
 class ToDo(db.Model):
     sno = db.Column(db.Integer, primary_key = True)
-    title = db.Column(db.String(200), nullable = False)
-    desc = db.Column(db.String(600), nullable = False)
-    date_created = db.Column(db.DateTime,default = datetime.utcnow )
+    title = db.Column(db.String(300), nullable = False)
+    desc = db.Column(db.String(1000), nullable = False)
+    date_created = db.Column(db.Date,default = date.today , nullable = False)
 
 # what do you want to print-- > repr function is used
     def __repr__(self) -> str:
@@ -71,6 +71,8 @@ def delete(sno):
     db.session.delete(alltodo)
     db.session.commit()
     return redirect("/")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
